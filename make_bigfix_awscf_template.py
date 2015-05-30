@@ -10,6 +10,9 @@ from troposphere import GetAtt, Parameter, Output, Ref, Tags, Template
 
 import troposphere.ec2 as ec2
 
+if 0:
+    from bf_cf_config import *
+
 def make_bigfix_awscf_template():
     template = Template()
 
@@ -59,6 +62,7 @@ if __name__ == '__main__':
     print( strResult )
     print ""
     
+    # http://stackoverflow.com/questions/15491417/how-to-overwrite-a-file-in-python
     f=open("bf_cf.template.json",'w')
     f.write(strResult+'\n')
     f.close();
