@@ -4,8 +4,8 @@
 ## This is an optional config file to predefine values for the CloudFormation Template
 ##    This must be renamed to bf_cf_config.py and filled out with proper values.
 
-
-BES_ROOT_SERVER_DNS  = "BigFixEval.ORGANIZATION.TLD"
+DEBUG = 1
+# BES_ROOT_SERVER_DNS  = "BigFixEval.ORGANIZATION.TLD"
 BES_ROOT_SERVER_PORT = "52311"
 
 ## Default to Windows, code not written for Linux yet

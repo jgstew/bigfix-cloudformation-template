@@ -4,18 +4,36 @@
 # https://github.com/cloudtools/troposphere/blob/master/examples/VPC_single_instance_in_subnet.py
 
 # region=us-west-1
-# shutdown behavoir = stop
+# shutdown behavior = stop
 # Protect against accidental termination
 from troposphere import GetAtt, Parameter, Output, Ref, Tags, Template
 
 import troposphere.ec2 as ec2
+import os.path
 
-if 0:
+## the following define the default behavior
+##   these values should be overriden using the bf_cf_config.py file
+DEBUG = 0
+BES_ROOT_SERVER_TYPE = "Windows"
+
+# if bf_cf_config.py exists, import it to override / add configuration
+if os.path.isfile("bf_cf_config.py"):
     from bf_cf_config import *
 
+def add_meraki_installer(template):
+    print "add_meraki_installer(template)"
+    return "not yet implimented"
+
+# MAIN function
 def make_bigfix_awscf_template():
     template = Template()
-
+    
+    # http://stackoverflow.com/questions/843277/how-do-i-check-if-a-variable-exists-in-python
+    # http://www.tutorialspoint.com/python/string_endswith.htm
+    #   Only run the function to include the Meraki MSI installation if Windows Server + MERAKI_MSI_URL defined properly
+    if "Windows" == BES_ROOT_SERVER_TYPE and 'MERAKI_MSI_URL' in globals() and MERAKI_MSI_URL.endswith('/MerakiPCCAgent.msi'):
+        add_meraki_installer(template)
+        
     template.add_description("""\
 BigFix Eval AWS CloudFormation Template within the resource limits of the AWS free tier.  \
 **WARNING** This template creates Amazon EC2 & RDS instances. You may be billed \
@@ -54,13 +72,13 @@ for the AWS resources used if you create a stack from this template.""")
     return template.to_json()
 
 
-
-
 if __name__ == '__main__':
-    print ""
     strResult = make_bigfix_awscf_template()
-    print( strResult )
-    print ""
+    
+    if DEBUG:
+        print ""
+        print( strResult )
+        print ""
     
     # http://stackoverflow.com/questions/15491417/how-to-overwrite-a-file-in-python
     f=open("bf_cf.template.json",'w')
