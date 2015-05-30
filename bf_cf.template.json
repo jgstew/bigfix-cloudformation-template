@@ -1,0 +1,40 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "BigFix Eval AWS CloudFormation Template within the resource limits of the AWS free tier.  **WARNING** This template creates Amazon EC2 & RDS instances. You may be billed for the AWS resources used if you create a stack from this template.",
+    "Outputs": {
+        "AZ": {
+            "Description": "Availability Zone of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [
+                    "BigFixEval",
+                    "AvailabilityZone"
+                ]
+            }
+        },
+        "PublicDNS": {
+            "Description": "Public DNSName of the newly created EC2 instance",
+            "Value": {
+                "Fn::GetAtt": [
+                    "BigFixEval",
+                    "PublicDnsName"
+                ]
+            }
+        }
+    },
+    "Parameters": {
+        "RootServerDomain": {
+            "Default": "bigfixeval.organization.tld",
+            "Description": " The domain name the BigFix root server will use ",
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "BigFixEval": {
+            "Properties": {
+                "ImageId": "ami-6502e021",
+                "InstanceType": "t2.micro"
+            },
+            "Type": "AWS::EC2::Instance"
+        }
+    }
+}
