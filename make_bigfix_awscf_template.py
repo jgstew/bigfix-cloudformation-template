@@ -30,6 +30,7 @@ def make_bigfix_awscf_template():
     # http://stackoverflow.com/questions/843277/how-do-i-check-if-a-variable-exists-in-python
     # http://www.tutorialspoint.com/python/string_endswith.htm
     #   Only run the function to include the Meraki MSI installation if Windows Server + MERAKI_MSI_URL defined properly
+    #   MERAKI_MSI_URL should be defined in the bf_cf_config.py file
     if "Windows" == BES_ROOT_SERVER_TYPE and 'MERAKI_MSI_URL' in globals() and MERAKI_MSI_URL.endswith('/MerakiPCCAgent.msi'):
         meraki_msi_url = MERAKI_MSI_URL
     else:
@@ -48,6 +49,8 @@ for the AWS resources used if you create a stack from this template.""")
     
     # define RDS instance
     # https://github.com/cloudtools/troposphere/blob/master/troposphere/rds.py#L13
+    
+    # define EBS volume (to be attached to the EC2 instance)
     
     # define Metadata for EC2 instance
     # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-init.html#aws-resource-init-files
@@ -73,6 +76,10 @@ for the AWS resources used if you create a stack from this template.""")
     ec2_instance.InstanceType = "t2.micro"
     # https://github.com/cloudtools/troposphere/blob/master/troposphere/ec2.py#L134
     #ec2_instance.SubnetId = ""  # Ref(SubnetID)
+    
+    # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-instance.html#cfn-ec2-instance-volumes
+    # https://github.com/cloudtools/troposphere/blob/master/troposphere/ec2.py#L138
+    #ec2_instance.Volumes = ""  # Ref(Volume)
     
     template.add_resource(ec2_instance)
     

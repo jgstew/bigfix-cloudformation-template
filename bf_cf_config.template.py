@@ -11,3 +11,9 @@ BES_ROOT_SERVER_PORT = "52311"
 ## Default to Windows, code not written for Linux yet
 # BES_ROOT_SERVER_TYPE = "Linux"
 
+# Dev assumes all connected clients are for testing & debugging and should have BigFix / IEM tools deployed. (QnA, etc...)
+# Eval, PoC, Dev
+BES_ROOT_SERVER_PURPOSE = "Eval"
+
+# MERAKI_MSI_URL = "https://"
+
