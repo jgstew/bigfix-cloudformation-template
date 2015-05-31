@@ -86,15 +86,7 @@ if __name__ == '__main__':
         print( strResult )
         print ""
     
-    (
-    try:
-        cfcon = boto.cloudformation.connect_to_region( 'us-east-1' )
-        cfcon.validate_template( strResult )
-    except boto.exception.BotoServerError, e:
-        sys.stderr.write("FATAL: CloudFormation Template Validation Error:\n%s\n" % e.message)
-    else:
-        sys.stderr.write("Successfully validated template!\n")
-    )
+
     # http://stackoverflow.com/questions/15491417/how-to-overwrite-a-file-in-python
     f=open("bf_cf.template.json",'w')
     f.write(strResult+'\n')
