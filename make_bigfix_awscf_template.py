@@ -41,7 +41,15 @@ BigFix Eval AWS CloudFormation Template within the resource limits of the AWS fr
 for the AWS resources used if you create a stack from this template.""")
 
     template.add_version('2010-09-09')
-
+    
+    # define subnet
+    
+    # define DB Subnet Group
+    
+    # define RDS instance
+    # https://github.com/cloudtools/troposphere/blob/master/troposphere/rds.py#L13
+    
+    # define Metadata for EC2 instance
     # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-init.html#aws-resource-init-files
     # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/deploying.applications.html
     # https://github.com/cloudtools/troposphere/issues/3
@@ -58,11 +66,14 @@ for the AWS resources used if you create a stack from this template.""")
             }
         }
     }
-        
+    
+    # define EC2 instance with Metadata
     ec2_instance = ec2.Instance("BigFixEval", Metadata=metadata)
     ec2_instance.ImageId = "ami-6502e021"
     ec2_instance.InstanceType = "t2.micro"
-
+    # https://github.com/cloudtools/troposphere/blob/master/troposphere/ec2.py#L134
+    #ec2_instance.SubnetId = ""  # Ref(SubnetID)
+    
     template.add_resource(ec2_instance)
     
 
