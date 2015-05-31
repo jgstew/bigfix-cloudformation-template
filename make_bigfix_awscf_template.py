@@ -1,15 +1,18 @@
 
+# https://forum.bigfix.com/t/automate-bigfix-evaluation-setup-on-aws-free-tier/13438
+# https://github.com/jgstew/bigfix-cloudformation-template
 # https://github.com/cloudtools/troposphere
-# https://gist.github.com/jgstew/aff5da6a34c82e60fc75
 # https://github.com/cloudtools/troposphere/blob/master/examples/VPC_single_instance_in_subnet.py
+# http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
 
 # region=us-west-1
 # shutdown behavior = stop
 # Protect against accidental termination
 from troposphere import GetAtt, Parameter, Output, Ref, Tags, Template
-
+from troposphere import cloudformation
 import troposphere.ec2 as ec2
 import os.path
+import boto.cloudformation
 
 ## the following define the default behavior
 ##   these values should be overriden using the bf_cf_config.py file
@@ -22,6 +25,9 @@ if os.path.isfile("bf_cf_config.py"):
 
 def add_meraki_installer(template):
     print "add_meraki_installer(template)"
+    # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-init.html#aws-resource-init-files
+    # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/deploying.applications.html
+    # https://github.com/cloudtools/troposphere/issues/3
     return "not yet implimented"
 
 # MAIN function
@@ -44,7 +50,7 @@ for the AWS resources used if you create a stack from this template.""")
     ec2_instance = ec2.Instance("BigFixEval")
     ec2_instance.ImageId = "ami-6502e021"
     ec2_instance.InstanceType = "t2.micro"
-
+    
     template.add_resource(ec2_instance)
 
 
@@ -80,6 +86,15 @@ if __name__ == '__main__':
         print( strResult )
         print ""
     
+    (
+    try:
+        cfcon = boto.cloudformation.connect_to_region( 'us-east-1' )
+        cfcon.validate_template( strResult )
+    except boto.exception.BotoServerError, e:
+        sys.stderr.write("FATAL: CloudFormation Template Validation Error:\n%s\n" % e.message)
+    else:
+        sys.stderr.write("Successfully validated template!\n")
+    )
     # http://stackoverflow.com/questions/15491417/how-to-overwrite-a-file-in-python
     f=open("bf_cf.template.json",'w')
     f.write(strResult+'\n')
