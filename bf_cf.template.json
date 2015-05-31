@@ -34,8 +34,8 @@
                 "AWS::CloudFormation::Init": {
                     "config": {
                         "packages": {
-                            "yum": {
-                                "httpd": []
+                            "msi": {
+                                "meraki": "https://n19.meraki.com/ci-downloads/be1ac14e3f38efb8032897cf949868067919a51c/MerakiPCCAgent.msi"
                             }
                         }
                     }
