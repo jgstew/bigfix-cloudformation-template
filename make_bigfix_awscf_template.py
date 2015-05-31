@@ -22,18 +22,6 @@ BES_ROOT_SERVER_TYPE = "Windows"
 if os.path.isfile("bf_cf_config.py"):
     from bf_cf_config import *
 
-def add_meraki_installer():
-    print "add_meraki_installer()"
-    # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-init.html#aws-resource-init-files
-    # http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/deploying.applications.html
-    # https://github.com/cloudtools/troposphere/issues/3
-    
-    md_meraki = dict( 
-        msi = {
-            "meraki" : MERAKI_MSI_URL
-        }
-    )
-    return md_meraki
 
 # MAIN function
 def make_bigfix_awscf_template():
@@ -63,7 +51,7 @@ for the AWS resources used if you create a stack from this template.""")
                 "packages": {
                     "msi" : {
                         #"awscli" : "https://s3.amazonaws.com/aws-cli/AWSCLI64.msi",
-                            "meraki" : meraki_msi_url
+                        "meraki" : meraki_msi_url
                     },
                     
                 },
