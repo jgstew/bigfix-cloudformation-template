@@ -30,6 +30,17 @@
     },
     "Resources": {
         "BigFixEval": {
+            "Metadata": {
+                "AWS::CloudFormation::Init": {
+                    "config": {
+                        "packages": {
+                            "yum": {
+                                "httpd": []
+                            }
+                        }
+                    }
+                }
+            },
             "Properties": {
                 "ImageId": "ami-6502e021",
                 "InstanceType": "t2.micro"

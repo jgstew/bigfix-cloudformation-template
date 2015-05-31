@@ -47,12 +47,24 @@ for the AWS resources used if you create a stack from this template.""")
 
     template.add_version('2010-09-09')
 
-    ec2_instance = ec2.Instance("BigFixEval")
+    metadata = {
+        "AWS::CloudFormation::Init": {
+            "config": {
+                "packages": {
+                    "yum": {
+                        "httpd": []
+                    }
+                },
+            }
+        }
+    }
+        
+    ec2_instance = ec2.Instance("BigFixEval", Metadata=metadata)
     ec2_instance.ImageId = "ami-6502e021"
     ec2_instance.InstanceType = "t2.micro"
     
     template.add_resource(ec2_instance)
-
+    
 
     template.add_output([
         Output(
