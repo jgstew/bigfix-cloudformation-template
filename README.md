@@ -1,6 +1,6 @@
 # Abandoned
 
-I am no longer using the AWS server I was trying to automate with this template, so this is incomplete.
+I am no longer using the AWS server I was trying to automate with this template, so this is incomplete and will probably stay that way.
 
 ## bigfix-cloudformation-template
 
