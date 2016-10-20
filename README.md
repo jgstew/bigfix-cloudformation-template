@@ -6,7 +6,7 @@ I am no longer using the AWS server I was trying to automate with this template,
 
 Work in progress
 
-python code to generate an AWS CloudFormation Template for a BigFix/IEM evauluation root server with resources that fit within the AWS free tier. 
+python code to generate an AWS CloudFormation Template for a BigFix/IEM evaluation root server with resources that fit within the AWS free tier. 
 
 This is an example use of the https://github.com/cloudtools/troposphere library.
 
